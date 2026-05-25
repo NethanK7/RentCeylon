@@ -1,0 +1,189 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-cormorant: 'Cormorant Garamond', serif;
+    --font-dm-serif: 'DM Serif Display', serif;
+    --font-geist: 'Geist', sans-serif;
+    --font-jetbrains: 'JetBrains Mono', monospace;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: auto; /* Lenis handles scroll */
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: #FFFFFF;
+    color: #3D4F73;
+    font-family: var(--font-geist), sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  /* Grain overlay for luxury paper feel */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 200px 200px;
+  }
+
+  input, select, textarea {
+    font-size: 16px !important; /* Prevent iOS zoom */
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #F8F9FC;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #DDE3F0;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #C4CEEA;
+  }
+}
+
+@layer components {
+  /* Gold shimmer gradient for Featured cards */
+  .gold-shimmer-bg {
+    background: linear-gradient(
+      105deg,
+      transparent 40%,
+      rgba(232, 188, 106, 0.15) 50%,
+      transparent 60%
+    );
+    background-size: 200% auto;
+    animation: goldShimmer 3s linear infinite;
+  }
+
+  /* Center-out underline for nav links */
+  .nav-underline {
+    position: relative;
+  }
+  .nav-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    right: 50%;
+    height: 1px;
+    background: currentColor;
+    transition: left 0.3s ease, right 0.3s ease;
+  }
+  .nav-underline:hover::after {
+    left: 0;
+    right: 0;
+  }
+
+  /* Gold divider line */
+  .gold-rule {
+    height: 1px;
+    background: rgba(201, 151, 58, 0.3);
+  }
+
+  /* Will-change hint for animated elements */
+  .will-animate {
+    will-change: transform, opacity;
+  }
+
+  /* Clip path for image reveals */
+  .clip-hidden {
+    clip-path: inset(100% 0 0 0);
+  }
+  .clip-visible {
+    clip-path: inset(0% 0 0 0);
+  }
+
+  /* Blur-to-sharp initial state */
+  .blur-initial {
+    filter: blur(4px);
+    opacity: 0;
+  }
+}
+
+/* Global keyframes — referenced directly in style props across pages */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes drawLine {
+  from { opacity: 0; transform: scaleX(0); }
+  to   { opacity: 1; transform: scaleX(1); }
+}
+
+@keyframes goldShimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.5; }
+}
+
+@layer utilities {
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom, 1rem); }
+  .pt-safe  { padding-top: env(safe-area-inset-top, 0); }
+
+  .text-clip {
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Precision mono tabular numbers */
+  .tabular { font-variant-numeric: tabular-nums; }
+
+  /* Sharp image container — no overflow rounding */
+  .image-precision { overflow: hidden; border-radius: 0; }
+
+  /* Thin top rule — used as section dividers */
+  .rule-top    { border-top: 1px solid rgba(12,17,36,0.08); }
+  .rule-royal  { border-top: 1px solid #1A3D8F; }
+  .rule-gold   { border-top: 1px solid rgba(201,151,58,0.4); }
+}
+
+/* ── Selection color ──────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(26, 61, 143, 0.15);
+  color: #0C1124;
+}
+
+/* ── Focus ring — precision blue, no outline ─────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #1A3D8F;
+  outline-offset: 2px;
+}
+
+/* ── Remove default button/input radius everywhere ───────────────────────── */
+button, input, select, textarea {
+  border-radius: 0;
+}
+
+/* ── Smooth image rendering ───────────────────────────────────────────────── */
+img {
+  image-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
