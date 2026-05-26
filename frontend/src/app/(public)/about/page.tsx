@@ -18,6 +18,8 @@ import {
   AlertTriangle,
 } from 'lucide-react'
 import { TextReveal } from '@/components/animations/TextReveal'
+import { AnimatedText } from '@/components/animations/AnimatedText'
+import { FadeIn } from '@/components/animations/FadeIn'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -325,20 +327,23 @@ export default function AboutPage() {
             </TextReveal>
 
             <div className="space-y-4 font-sans text-slate leading-relaxed">
-              <p>
-                Sri Lanka has a vibrant but fragmented rental culture. From photography gear to luxury
-                vehicles, billions of rupees change hands every year — largely through WhatsApp messages,
-                verbal agreements, and handshake deposits.
-              </p>
-              <p>
-                When something goes wrong, neither party has recourse. RentLoop was built to change that:
-                to give every transaction a paper trail, every deposit an escrow, and every renter and
-                lister a fair process they can trust.
-              </p>
-              <p>
-                We are not just a marketplace. We are the institutional infrastructure that the informal
-                rental economy has always needed.
-              </p>
+              <AnimatedText
+                text="Sri Lanka has a vibrant but fragmented rental culture. From photography gear to luxury vehicles, billions of rupees change hands every year — largely through WhatsApp messages, verbal agreements, and handshake deposits."
+                className="leading-relaxed"
+              />
+              <FadeIn y={16} delay={0.1}>
+                <p>
+                  When something goes wrong, neither party has recourse. RentLoop was built to change that:
+                  to give every transaction a paper trail, every deposit an escrow, and every renter and
+                  lister a fair process they can trust.
+                </p>
+              </FadeIn>
+              <FadeIn y={16} delay={0.2}>
+                <p>
+                  We are not just a marketplace. We are the institutional infrastructure that the informal
+                  rental economy has always needed.
+                </p>
+              </FadeIn>
             </div>
           </div>
 

@@ -65,6 +65,22 @@
 }
 
 @layer components {
+  /* Cinematic gradient heading — navy-to-fog, inspired by portfolio hero text */
+  .hero-heading {
+    background: linear-gradient(180deg, #8A97B5 0%, #D7E2F0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Gold accent variant */
+  .hero-heading-gold {
+    background: linear-gradient(180deg, #C9973A 0%, #E8BC6A 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
   /* Gold shimmer gradient for Featured cards */
   .gold-shimmer-bg {
     background: linear-gradient(

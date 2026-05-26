@@ -6,6 +6,8 @@ import { motion } from 'framer-motion'
 import { ArrowUpRight, ArrowRight } from 'lucide-react'
 import { CountUp } from '@/components/animations/CountUp'
 import { CardStagger } from '@/components/animations/CardStagger'
+import { FadeIn } from '@/components/animations/FadeIn'
+import { Magnet } from '@/components/animations/Magnet'
 import { ListingCard } from '@/components/listings/ListingCard'
 import { ProductArrivesSection } from '@/components/sections/ProductArrivesSection'
 import { TrustScrollSection } from '@/components/sections/TrustScrollSection'
@@ -170,19 +172,23 @@ export default function HomePage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: EXPO, delay: 1.2 }}
             >
-              <Link
-                href="/browse"
-                className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-royal text-white font-sans font-medium text-sm tracking-wide transition-all duration-200 hover:bg-royal-dark group"
-              >
-                Browse listings
-                <ArrowUpRight size={14} strokeWidth={1.5} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-              </Link>
-              <Link
-                href="/auth/signup"
-                className="inline-flex items-center gap-2 px-7 py-3.5 border border-ink/20 text-ink font-sans font-medium text-sm tracking-wide transition-all duration-200 hover:border-royal hover:text-royal"
-              >
-                List your item
-              </Link>
+              <Magnet padding={40} strength={4}>
+                <Link
+                  href="/browse"
+                  className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-royal text-white font-sans font-medium text-sm tracking-wide transition-all duration-200 hover:bg-royal-dark group"
+                >
+                  Browse listings
+                  <ArrowUpRight size={14} strokeWidth={1.5} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                </Link>
+              </Magnet>
+              <Magnet padding={40} strength={4}>
+                <Link
+                  href="/auth/signup"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 border border-ink/20 text-ink font-sans font-medium text-sm tracking-wide transition-all duration-200 hover:border-royal hover:text-royal"
+                >
+                  List your item
+                </Link>
+              </Magnet>
             </motion.div>
           </div>
 
@@ -212,26 +218,21 @@ export default function HomePage() {
       {/* ── FEATURED LISTINGS ─────────────────────────────────────────────── */}
       <section className="py-28 bg-white border-t border-ink/6">
         <div className="max-w-[1440px] mx-auto px-8 md:px-16">
-          <div className="flex items-end justify-between mb-0">
+          <FadeIn y={24} className="flex items-end justify-between mb-0">
             <SectionHeader
               index="02"
               title="Featured this week"
               subtitle="Hand-picked by our curation team"
             />
-            <motion.div
-              className="hidden md:block mb-16"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-            >
+            <div className="hidden md:block mb-16">
               <Link
                 href="/browse"
                 className="inline-flex items-center gap-2 text-sm font-sans text-royal border-b border-royal/30 pb-0.5 hover:border-royal transition-colors"
               >
                 View all <ArrowRight size={13} strokeWidth={1.5} />
               </Link>
-            </motion.div>
-          </div>
+            </div>
+          </FadeIn>
 
           <CardStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-ink/8 border border-ink/8">
             {LISTINGS.map((listing) => (
