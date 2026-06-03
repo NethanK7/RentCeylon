@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Cormorant_Garamond, DM_Serif_Display, Geist, JetBrains_Mono } from 'next/font/google'
+import { Cormorant_Garamond, DM_Serif_Display, Poppins, JetBrains_Mono } from 'next/font/google'
 import './globals.css'
 import { Navigation } from '@/components/layout/Navigation'
 import { Providers } from './providers'
@@ -20,8 +20,9 @@ const dmSerif = DM_Serif_Display({
   display: 'swap',
 })
 
-const geist = Geist({
+const poppins = Poppins({
   subsets: ['latin'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-geist',
   display: 'swap',
 })
@@ -60,7 +61,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${cormorant.variable} ${dmSerif.variable} ${geist.variable} ${jetbrains.variable} font-sans`}>
+      <body className={`${cormorant.variable} ${dmSerif.variable} ${poppins.variable} ${jetbrains.variable} font-sans`}>
         <Providers>
           <Navigation />
           {children}

@@ -10,7 +10,7 @@ const NAV_LINKS = [
   { href: '/browse', label: 'Browse' },
   { href: '/pricing', label: 'For Listers' },
   { href: '/about', label: 'How It Works' },
-  { href: '/property-management', label: 'Property' },
+  { href: '/property-management', label: 'Property Management' },
 ]
 
 export function Navigation() {

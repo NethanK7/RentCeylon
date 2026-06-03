@@ -3,17 +3,16 @@ import { Star } from 'lucide-react'
 export function FeaturedBadge() {
   return (
     <div
-      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-sans font-medium"
+      className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-card font-sans font-semibold text-[11px] uppercase tracking-[0.1em] select-none"
       style={{
-        border: '1.5px solid #E8BC6A',
-        color: '#A67928',
-        background: 'linear-gradient(135deg, rgba(249,241,226,0.9), rgba(232,188,106,0.15))',
+        background: '#C9973A',
+        color: '#FFFFFF',
+        letterSpacing: '0.08em',
       }}
-      title="Promoted Listing"
+      title="Featured — Promoted Listing"
     >
-      <Star size={11} strokeWidth={1.5} style={{ fill: '#E8BC6A', color: '#E8BC6A' }} />
+      <Star size={10} strokeWidth={0} style={{ fill: '#FFFFFF' }} />
       Featured
-      <span className="text-[9px] uppercase tracking-widest ml-0.5 opacity-60">Promoted</span>
     </div>
   )
 }
