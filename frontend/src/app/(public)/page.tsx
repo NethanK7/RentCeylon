@@ -131,15 +131,15 @@ export default function HomePage() {
           <div className="mb-10">
             <h1
               className="font-sans text-ink block"
-              style={{ fontSize: 'clamp(4rem, 11vw, 10rem)', fontWeight: 800, lineHeight: 0.92, letterSpacing: '-0.04em' }}
+              style={{ fontSize: 'clamp(3.5rem, 10vw, 9.5rem)', fontWeight: 800, lineHeight: 1.05, letterSpacing: '-0.03em' }}
             >
-              <span className="block overflow-hidden">
+              <span className="block" style={{ paddingBottom: '0.1em', marginBottom: '-0.1em' }}>
                 <HeroWord word="Rent" delay={0.5} />
                 <HeroWord word="anything." delay={0.62} />
               </span>
-              <span className="block overflow-hidden">
+              <span className="block" style={{ paddingBottom: '0.1em', marginBottom: '-0.1em' }}>
                 <HeroWord word="From" delay={0.74} />
-                <HeroWord word="anyone." delay={0.86} italic color="#1A3D8F" />
+                <HeroWord word="anyone." delay={0.86} color="#1A3D8F" />
               </span>
             </h1>
           </div>

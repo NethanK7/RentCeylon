@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Check, Calendar, FileText, CreditCard, CheckCircle, ChevronLeft, Shield } from 'lucide-react'
 import Link from 'next/link'
@@ -80,7 +80,8 @@ function CalendarPicker({ startDate, endDate, onSelect }: { startDate: Date | nu
   )
 }
 
-export default function CheckoutPage({ params }: { params: { listingId: string } }) {
+export default function CheckoutPage({ params }: { params: Promise<{ listingId: string }> }) {
+  const { listingId } = React.use(params)
   const [step, setStep] = useState(0)
   const [startDate, setStartDate] = useState<Date | null>(null)
   const [endDate, setEndDate] = useState<Date | null>(null)
@@ -103,7 +104,7 @@ export default function CheckoutPage({ params }: { params: { listingId: string }
       <div className="max-w-xl mx-auto">
         {/* Back link */}
         {step < 3 && (
-          <Link href={`/listings/${params.listingId}`} className="flex items-center gap-2 text-sm font-sans text-fog hover:text-ink transition-colors mb-6">
+          <Link href={`/listings/${listingId}`} className="flex items-center gap-2 text-sm font-sans text-fog hover:text-ink transition-colors mb-6">
             <ChevronLeft size={16} strokeWidth={1.5} />
             Back to listing
           </Link>

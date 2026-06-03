@@ -11,26 +11,11 @@ const EXPO = [0.16, 1, 0.3, 1] as const
 export default function SignUpPage() {
   const router = useRouter()
   const [role, setRole] = useState<'RENTER' | 'LISTER' | null>(null)
-  const [step, setStep] = useState<'role' | 'details' | 'otp'>('role')
+  const [step, setStep] = useState<'role' | 'details'>('role')
   const [tosAccepted, setTosAccepted] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
-  const [otp, setOtp] = useState(['', '', '', '', '', ''])
   const [form, setForm] = useState({ name: '', email: '', password: '' })
   const [errors, setErrors] = useState<Record<string, string>>({})
-
-  const handleOtpChange = (index: number, value: string) => {
-    if (value.length > 1) return
-    const newOtp = [...otp]
-    newOtp[index] = value
-    setOtp(newOtp)
-    if (value && index < 5) document.getElementById(`otp-${index + 1}`)?.focus()
-  }
-
-  const handleOtpKeyDown = (index: number, e: React.KeyboardEvent) => {
-    if (e.key === 'Backspace' && !otp[index] && index > 0) {
-      document.getElementById(`otp-${index - 1}`)?.focus()
-    }
-  }
 
   const validate = () => {
     const errs: Record<string, string> = {}
@@ -45,10 +30,11 @@ export default function SignUpPage() {
     e.preventDefault()
     const errs = validate()
     if (Object.keys(errs).length) { setErrors(errs); return }
-    setStep('otp')
+    // Skip OTP verification during account creation. Route directly to dashboard.
+    router.push('/dashboard')
   }
 
-  const stepLabel = step === 'role' ? '01 — Choose role' : step === 'details' ? '02 — Your details' : '03 — Verify'
+  const stepLabel = step === 'role' ? '01 — Choose role' : '02 — Your details'
 
   return (
     <div className="min-h-screen bg-white flex">
@@ -176,7 +162,7 @@ export default function SignUpPage() {
               >
                 <h2 className="font-display text-3xl text-ink font-light mb-8">How will you use RentLoop?</h2>
 
-                <div className="grid grid-cols-2 gap-px bg-ink/[0.06] mb-6">
+                <div className="grid grid-cols-2 gap-3 mb-6">
                   {[
                     { value: 'RENTER', label: 'I want to rent', sub: 'Browse & rent items', icon: User },
                     { value: 'LISTER', label: 'I want to list', sub: 'List items & earn', icon: Building2 },
@@ -184,11 +170,10 @@ export default function SignUpPage() {
                     <button
                       key={value}
                       onClick={() => setRole(value as 'RENTER' | 'LISTER')}
-                      className="relative p-6 bg-white text-left transition-all duration-200 group"
+                      className="relative p-6 bg-white text-left transition-all duration-200 group rounded-xl shadow-sm hover:shadow-md"
                       style={{
                         background: role === value ? '#EEF2FB' : '#FFFFFF',
-                        outline: role === value ? '2px solid #1A3D8F' : 'none',
-                        outlineOffset: '-2px',
+                        border: role === value ? '2px solid #1A3D8F' : '1px solid #E2E8F0',
                       }}
                     >
                       <Icon size={16} strokeWidth={1.5} className="mb-4" style={{ color: role === value ? '#1A3D8F' : '#8A97B5' }} />
@@ -222,7 +207,7 @@ export default function SignUpPage() {
                 <button
                   disabled={!role}
                   onClick={() => setStep('details')}
-                  className="w-full py-3.5 border font-sans text-sm font-medium flex items-center justify-center gap-2 transition-all duration-200"
+                  className="w-full py-3.5 border font-sans text-sm font-medium flex items-center justify-center gap-2 transition-all duration-200 rounded-full"
                   style={{
                     borderColor: role ? '#1A3D8F' : '#DDE3F0',
                     color: role ? '#1A3D8F' : '#8A97B5',
@@ -316,7 +301,8 @@ export default function SignUpPage() {
 
                   <button
                     type="submit"
-                    className="w-full py-3.5 border border-royal text-royal font-sans text-sm font-medium flex items-center justify-center gap-2 hover:bg-royal hover:text-white transition-all duration-200"
+                    className="w-full py-3.5 border border-royal text-white font-sans text-sm font-semibold flex items-center justify-center gap-2 transition-all duration-200 rounded-full"
+                    style={{ background: 'linear-gradient(135deg, #1A3D8F 0%, #2952B8 100%)', boxShadow: '0 4px 16px rgba(26,61,143,0.3)' }}
                   >
                     Create Account <ArrowRight size={14} strokeWidth={1.5} />
                   </button>
@@ -329,49 +315,7 @@ export default function SignUpPage() {
               </motion.div>
             )}
 
-            {/* Step: OTP */}
-            {step === 'otp' && (
-              <motion.div
-                key="otp"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.5, ease: EXPO }}
-              >
-                <h2 className="font-display text-3xl text-ink font-light mb-2">Verify your number</h2>
-                <p className="font-sans text-sm text-fog mb-8">Enter the 6-digit code sent to your mobile</p>
 
-                <div className="flex gap-2 mb-8">
-                  {otp.map((digit, i) => (
-                    <input
-                      key={i}
-                      id={`otp-${i}`}
-                      type="text"
-                      inputMode="numeric"
-                      maxLength={1}
-                      value={digit}
-                      onChange={(e) => handleOtpChange(i, e.target.value)}
-                      onKeyDown={(e) => handleOtpKeyDown(i, e)}
-                      className="flex-1 h-14 text-center font-mono text-xl text-ink border-b-2 bg-transparent outline-none transition-colors"
-                      style={{
-                        borderColor: digit ? '#1A3D8F' : '#DDE3F0',
-                        color: digit ? '#1A3D8F' : '#0C1124',
-                      }}
-                    />
-                  ))}
-                </div>
-
-                <button
-                  onClick={() => router.push('/dashboard')}
-                  className="w-full py-3.5 border border-royal text-royal font-sans text-sm font-medium flex items-center justify-center gap-2 hover:bg-royal hover:text-white transition-all duration-200"
-                >
-                  Verify & Continue <ArrowRight size={14} strokeWidth={1.5} />
-                </button>
-                <button className="mt-4 font-mono text-[11px] uppercase tracking-[0.1em] text-fog hover:text-royal transition-colors block">
-                  Resend code
-                </button>
-              </motion.div>
-            )}
           </AnimatePresence>
         </div>
       </div>

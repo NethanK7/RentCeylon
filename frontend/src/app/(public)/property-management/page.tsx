@@ -528,7 +528,7 @@ export default function PropertyManagementPage() {
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="font-sans text-sm text-slate">Already managing properties?</p>
           <a
-            href="/auth/sign-in"
+            href="/auth/login"
             className="inline-flex items-center gap-2 font-sans text-sm font-medium text-royal hover:text-royal-dark transition-colors"
           >
             Sign in to your portal <ArrowRight size={14} />

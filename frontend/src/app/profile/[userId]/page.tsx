@@ -1,3 +1,5 @@
+'use client'
+
 import { FadeIn } from '@/components/animations/FadeIn'
 import { CountUp } from '@/components/animations/CountUp'
 import { StarRating } from '@/components/ui/StarRating'
