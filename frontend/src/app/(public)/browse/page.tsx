@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Search, SlidersHorizontal, X } from 'lucide-react'
+import { Search, SlidersHorizontal, X, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ListingCard } from '@/components/listings/ListingCard'
 import { CardStagger } from '@/components/animations/CardStagger'
@@ -54,130 +54,169 @@ export default function BrowsePage() {
   const [searchQuery, setSearchQuery] = useState('')
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeSort, setActiveSort] = useState('Newest')
-  const [showFilters, setShowFilters] = useState(false)
+  const [_showFilters, setShowFilters] = useState(false)
   const [activeFilters, setActiveFilters] = useState<string[]>([])
   const [loading] = useState(false)
 
-  const removeFilter = (filter: string) => {
-    setActiveFilters((f) => f.filter((x) => x !== filter))
-  }
+  const removeFilter = (filter: string) => setActiveFilters((f) => f.filter((x) => x !== filter))
 
   const sponsored = MOCK_LISTINGS.filter((l) => l.isSponsored)
   const regular = MOCK_LISTINGS.filter((l) => !l.isSponsored)
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Sticky filter bar */}
-      <div className="sticky top-[60px] z-40 bg-white border-b border-ink/[0.06]">
-        <div className="max-w-[1200px] mx-auto px-6 py-4">
-          {/* Search row */}
-          <div className="flex gap-3 mb-4">
-            <div className="flex-1 flex items-center gap-3 px-4 py-3 border border-border bg-snow focus-within:border-royal transition-colors duration-200">
-              <Search size={14} strokeWidth={1.5} className="text-fog shrink-0" />
-              <input
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search listings..."
-                className="flex-1 bg-transparent font-sans text-sm text-ink placeholder-fog/50 outline-none"
-                style={{ fontSize: 16 }}
-              />
-              {searchQuery && (
-                <button onClick={() => setSearchQuery('')}>
-                  <X size={12} strokeWidth={1.5} className="text-fog hover:text-ink transition-colors" />
-                </button>
-              )}
+    <div className="min-h-screen" style={{ background: '#F8F9FB' }}>
+
+      {/* ── Page hero ── */}
+      <div className="bg-white border-b border-black/5 pt-[62px]">
+        <div className="max-w-[1200px] mx-auto px-6 py-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+            <div>
+              <p className="section-label mb-2">Marketplace</p>
+              <h1 className="font-sans text-3xl md:text-4xl font-bold text-ink tracking-tight leading-tight">
+                Find anything.<br className="md:hidden" /> Rent today.
+              </h1>
             </div>
-            <button
-              onClick={() => setShowFilters((v) => !v)}
-              className="flex items-center gap-2 px-4 py-3 border border-border font-mono text-[11px] uppercase tracking-[0.1em] text-slate hover:border-royal hover:text-royal transition-colors"
-            >
-              <SlidersHorizontal size={13} strokeWidth={1.5} />
-              Filters
-              {activeFilters.length > 0 && (
-                <span className="w-4 h-4 bg-royal text-white text-[10px] font-mono flex items-center justify-center">{activeFilters.length}</span>
-              )}
-            </button>
+            <p className="font-sans text-sm text-fog max-w-xs leading-relaxed">
+              {MOCK_LISTINGS.length} listings across Sri Lanka — cameras, cars, villas, gear & more.
+            </p>
           </div>
+        </div>
 
-          {/* Category tabs */}
-          <div className="flex gap-1 overflow-x-auto pb-1">
-            {CATEGORIES.map((cat) => (
+        {/* ── Sticky search + filter bar ── */}
+        <div className="sticky top-[62px] z-40 bg-white/90 border-b border-black/5"
+          style={{ backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}>
+          <div className="max-w-[1200px] mx-auto px-6 py-3">
+
+            <div className="flex gap-2 mb-3">
+              {/* Search */}
+              <div className="flex-1 flex items-center gap-2.5 px-4 py-2.5 rounded-full border border-black/08 bg-[#F8F9FB] focus-within:border-royal focus-within:ring-2 focus-within:ring-royal/10 transition-all">
+                <Search size={14} strokeWidth={2} className="text-fog shrink-0" />
+                <input
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search listings..."
+                  className="flex-1 bg-transparent font-sans text-sm text-ink placeholder:text-fog/60 outline-none"
+                />
+                <AnimatePresence>
+                  {searchQuery && (
+                    <motion.button
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.8 }}
+                      onClick={() => setSearchQuery('')}
+                      className="w-4 h-4 rounded-full bg-fog/20 flex items-center justify-center hover:bg-fog/30 transition-colors"
+                    >
+                      <X size={9} strokeWidth={2.5} className="text-fog" />
+                    </motion.button>
+                  )}
+                </AnimatePresence>
+              </div>
+
+              {/* Filter toggle */}
               <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className="shrink-0 px-4 py-1.5 font-mono text-[10px] uppercase tracking-[0.1em] transition-all border"
-                style={{
-                  background: activeCategory === cat ? '#1A3D8F' : 'transparent',
-                  color: activeCategory === cat ? '#FFFFFF' : '#8A97B5',
-                  borderColor: activeCategory === cat ? '#1A3D8F' : 'transparent',
-                }}
+                onClick={() => setShowFilters((v) => !v)}
+                className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-black/08 bg-[#F8F9FB] hover:border-royal hover:bg-royal/5 text-slate text-xs font-medium transition-all"
               >
-                {cat}
+                <SlidersHorizontal size={13} strokeWidth={1.5} />
+                Filters
+                {activeFilters.length > 0 && (
+                  <span className="w-4 h-4 rounded-full bg-royal text-white text-[9px] font-bold flex items-center justify-center">
+                    {activeFilters.length}
+                  </span>
+                )}
               </button>
-            ))}
-          </div>
+            </div>
 
-          {/* Active filter chips */}
-          {activeFilters.length > 0 && (
-            <div className="flex gap-2 mt-3 flex-wrap">
-              {activeFilters.map((f) => (
+            {/* Category pills */}
+            <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+              {CATEGORIES.map((cat) => (
                 <button
-                  key={f}
-                  onClick={() => removeFilter(f)}
-                  className="flex items-center gap-1.5 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.08em] text-white"
-                  style={{ background: '#1A3D8F' }}
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className="shrink-0 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all duration-200"
+                  style={
+                    activeCategory === cat
+                      ? { background: '#1A3D8F', color: '#FFFFFF', boxShadow: '0 2px 8px rgba(26,61,143,0.25)' }
+                      : { background: 'transparent', color: '#8A97B5', border: '1px solid transparent' }
+                  }
+                  onMouseEnter={e => { if (activeCategory !== cat) (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.04)' }}
+                  onMouseLeave={e => { if (activeCategory !== cat) (e.currentTarget as HTMLElement).style.background = 'transparent' }}
                 >
-                  {f} <X size={9} strokeWidth={2} />
+                  {cat}
                 </button>
               ))}
             </div>
-          )}
+
+            {/* Active filter chips */}
+            <AnimatePresence>
+              {activeFilters.length > 0 && (
+                <motion.div
+                  initial={{ height: 0, opacity: 0 }}
+                  animate={{ height: 'auto', opacity: 1 }}
+                  exit={{ height: 0, opacity: 0 }}
+                  className="flex gap-2 mt-2.5 flex-wrap overflow-hidden"
+                >
+                  {activeFilters.map((f) => (
+                    <button
+                      key={f}
+                      onClick={() => removeFilter(f)}
+                      className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-royal/10 text-royal text-xs font-medium hover:bg-royal/20 transition-colors"
+                    >
+                      {f} <X size={9} strokeWidth={2.5} />
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </div>
 
+      {/* ── Content ── */}
       <div className="max-w-[1200px] mx-auto px-6 py-8">
-        {/* Sort + count row */}
+
+        {/* Sort row */}
         <div className="flex items-center justify-between mb-6">
-          <p className="font-mono text-[11px] uppercase tracking-[0.1em] text-fog">
-            {MOCK_LISTINGS.length} listings
+          <p className="font-sans text-sm font-semibold text-ink">
+            {MOCK_LISTINGS.length} <span className="font-normal text-fog">listings</span>
           </p>
           <div className="flex items-center gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-fog">Sort:</span>
+            <span className="font-sans text-xs text-fog">Sort:</span>
             <select
               value={activeSort}
               onChange={(e) => setActiveSort(e.target.value)}
-              className="font-mono text-[11px] text-ink bg-transparent border-none outline-none cursor-pointer uppercase tracking-[0.06em]"
+              className="font-sans text-xs font-medium text-ink bg-white border border-black/08 rounded-full px-3 py-1.5 outline-none cursor-pointer hover:border-black/15 transition-colors"
             >
               {SORT_OPTIONS.map((o) => <option key={o}>{o}</option>)}
             </select>
           </div>
         </div>
 
-        {/* Sponsored section */}
+        {/* Sponsored */}
         {sponsored.length > 0 && (
           <div className="mb-8">
-            <p className="text-xs font-sans text-fog uppercase tracking-widest mb-4">Promoted Listings</p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Sparkles size={12} strokeWidth={1.5} className="text-gold" />
+              <p className="font-sans text-xs font-medium text-gold uppercase tracking-widest">Promoted</p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {sponsored.map((listing) => (
                 <ListingCard key={listing.id} listing={listing} />
               ))}
             </div>
-            <div className="my-8 h-px" style={{ background: 'rgba(201,151,58,0.2)' }} />
+            <div className="my-8 h-px bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
           </div>
         )}
 
         {/* Main grid */}
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, i) => <CardSkeleton key={i} />)}
           </div>
         ) : regular.length === 0 ? (
-          <EmptyState
-            title="No listings found"
-            description="Try adjusting your filters or search query"
-          />
+          <EmptyState title="No listings found" description="Try adjusting your filters or search query" />
         ) : (
-          <CardStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <CardStagger className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {regular.map((listing) => (
               <ListingCard key={listing.id} listing={listing} />
             ))}

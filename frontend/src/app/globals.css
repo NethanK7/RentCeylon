@@ -6,7 +6,7 @@
   :root {
     --font-cormorant: 'Cormorant Garamond', serif;
     --font-dm-serif: 'DM Serif Display', serif;
-    --font-geist: 'Geist', sans-serif;
+    --font-geist: 'Poppins', sans-serif;
     --font-jetbrains: 'JetBrains Mono', monospace;
   }
 
@@ -15,148 +15,203 @@
   }
 
   html {
-    scroll-behavior: auto; /* Lenis handles scroll */
+    scroll-behavior: auto;
     overflow-x: hidden;
   }
 
   body {
     background-color: #FFFFFF;
-    color: #3D4F73;
+    color: #0C1124;
     font-family: var(--font-geist), sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
 
-  /* Grain overlay for luxury paper feel */
-  body::after {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 9999;
-    opacity: 0.025;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-    background-repeat: repeat;
-    background-size: 200px 200px;
-  }
-
   input, select, textarea {
-    font-size: 16px !important; /* Prevent iOS zoom */
+    font-size: 16px !important;
   }
 
   /* Scrollbar */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: #F8F9FC;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: #DDE3F0;
-    border-radius: 3px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #C4CEEA;
-  }
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #E4EAF4; border-radius: 9999px; }
+  ::-webkit-scrollbar-thumb:hover { background: #C4CEEA; }
 }
 
 @layer components {
-  /* Cinematic gradient heading — navy-to-fog, inspired by portfolio hero text */
+
+  /* ── Gradient headings ─────────────────────────────────────────────────── */
   .hero-heading {
-    background: linear-gradient(180deg, #8A97B5 0%, #D7E2F0 100%);
+    background: linear-gradient(135deg, #1A3D8F 0%, #4A7FD4 50%, #8A97B5 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  /* Gold accent variant */
   .hero-heading-gold {
-    background: linear-gradient(180deg, #C9973A 0%, #E8BC6A 100%);
+    background: linear-gradient(135deg, #C9973A 0%, #E8BC6A 60%, #F5D08A 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
   }
 
-  /* Gold shimmer gradient for Featured cards */
-  .gold-shimmer-bg {
-    background: linear-gradient(
-      105deg,
-      transparent 40%,
-      rgba(232, 188, 106, 0.15) 50%,
-      transparent 60%
-    );
-    background-size: 200% auto;
-    animation: goldShimmer 3s linear infinite;
+  .hero-heading-dark {
+    background: linear-gradient(135deg, #0C1124 0%, #3D4F73 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
   }
 
-  /* Center-out underline for nav links */
-  .nav-underline {
-    position: relative;
+  /* ── Glassmorphism ─────────────────────────────────────────────────────── */
+  .glass {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
   }
+
+  .glass-dark {
+    background: rgba(12, 17, 36, 0.75);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  /* ── Gradient CTAs ─────────────────────────────────────────────────────── */
+  .btn-primary {
+    background: linear-gradient(135deg, #1A3D8F 0%, #2952B8 100%);
+    color: #FFFFFF;
+    font-family: var(--font-geist), sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(26,61,143,0.25);
+  }
+  .btn-primary:hover {
+    background: linear-gradient(135deg, #122D6B 0%, #1A3D8F 100%);
+    box-shadow: 0 4px 16px rgba(26,61,143,0.35);
+    transform: translateY(-1px);
+  }
+
+  .btn-gold {
+    background: linear-gradient(135deg, #C9973A 0%, #E8BC6A 100%);
+    color: #0C1124;
+    font-family: var(--font-geist), sans-serif;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(201,151,58,0.25);
+  }
+  .btn-gold:hover {
+    box-shadow: 0 4px 16px rgba(201,151,58,0.35);
+    transform: translateY(-1px);
+  }
+
+  /* ── Card base ─────────────────────────────────────────────────────────── */
+  .card {
+    background: #FFFFFF;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 14px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 0 0 1px rgba(0,0,0,0.03);
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .card:hover {
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08), 0 0 0 1px rgba(0,0,0,0.06);
+  }
+
+  /* ── Section divider ───────────────────────────────────────────────────── */
+  .section-label {
+    font-family: var(--font-jetbrains), monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #8A97B5;
+  }
+
+  /* ── Nav underline ─────────────────────────────────────────────────────── */
+  .nav-underline { position: relative; }
   .nav-underline::after {
     content: '';
     position: absolute;
     bottom: -2px;
     left: 50%;
     right: 50%;
-    height: 1px;
-    background: currentColor;
-    transition: left 0.3s ease, right 0.3s ease;
+    height: 1.5px;
+    background: #1A3D8F;
+    border-radius: 9999px;
+    transition: left 0.25s ease, right 0.25s ease;
   }
-  .nav-underline:hover::after {
-    left: 0;
-    right: 0;
+  .nav-underline:hover::after { left: 0; right: 0; }
+
+  /* ── Gold shimmer ──────────────────────────────────────────────────────── */
+  .gold-shimmer-bg {
+    background: linear-gradient(105deg, transparent 40%, rgba(232,188,106,0.15) 50%, transparent 60%);
+    background-size: 200% auto;
+    animation: goldShimmer 3s linear infinite;
   }
 
-  /* Gold divider line */
-  .gold-rule {
-    height: 1px;
-    background: rgba(201, 151, 58, 0.3);
+  /* ── Input base ────────────────────────────────────────────────────────── */
+  .input-base {
+    background: #FAFAFA;
+    border: 1px solid rgba(0,0,0,0.09);
+    border-radius: 10px;
+    color: #0C1124;
+    font-family: var(--font-geist), sans-serif;
+    font-size: 0.9375rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
+  .input-base:focus {
+    outline: none;
+    border-color: #1A3D8F;
+    box-shadow: 0 0 0 3px rgba(26,61,143,0.10);
+  }
+  .input-base::placeholder { color: #8A97B5; }
 
-  /* Will-change hint for animated elements */
-  .will-animate {
-    will-change: transform, opacity;
+  /* ── Gradient glow orbs (decorative) ──────────────────────────────────── */
+  .orb-blue {
+    background: radial-gradient(circle, rgba(26,61,143,0.15) 0%, transparent 70%);
+    border-radius: 9999px;
+    pointer-events: none;
   }
-
-  /* Clip path for image reveals */
-  .clip-hidden {
-    clip-path: inset(100% 0 0 0);
-  }
-  .clip-visible {
-    clip-path: inset(0% 0 0 0);
-  }
-
-  /* Blur-to-sharp initial state */
-  .blur-initial {
-    filter: blur(4px);
-    opacity: 0;
+  .orb-gold {
+    background: radial-gradient(circle, rgba(201,151,58,0.12) 0%, transparent 70%);
+    border-radius: 9999px;
+    pointer-events: none;
   }
 }
 
-/* Global keyframes — referenced directly in style props across pages */
+/* ── Keyframes ────────────────────────────────────────────────────────────── */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(12px); }
+  from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideInLeft {
+  from { opacity: 0; transform: translateX(-20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
 @keyframes drawLine {
   from { opacity: 0; transform: scaleX(0); }
   to   { opacity: 1; transform: scaleX(1); }
 }
-
 @keyframes goldShimmer {
   0%   { background-position: 200% center; }
   100% { background-position: -200% center; }
 }
-
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.5; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
 
 @layer utilities {
@@ -169,37 +224,29 @@
     -webkit-text-fill-color: transparent;
   }
 
-  /* Precision mono tabular numbers */
   .tabular { font-variant-numeric: tabular-nums; }
 
-  /* Sharp image container — no overflow rounding */
-  .image-precision { overflow: hidden; border-radius: 0; }
+  .animate-float { animation: float 4s ease-in-out infinite; }
+  .animate-fade-in { animation: fadeIn 0.6s ease forwards; }
+  .animate-fade-in-up { animation: fadeInUp 0.6s ease forwards; }
 
-  /* Thin top rule — used as section dividers */
-  .rule-top    { border-top: 1px solid rgba(12,17,36,0.08); }
-  .rule-royal  { border-top: 1px solid #1A3D8F; }
-  .rule-gold   { border-top: 1px solid rgba(201,151,58,0.4); }
+  /* Skeleton shimmer */
+  .skeleton {
+    background: linear-gradient(90deg, #F0F3F9 25%, #E4EAF4 50%, #F0F3F9 75%);
+    background-size: 200% 100%;
+    animation: shimmer 1.5s ease-in-out infinite;
+  }
 }
 
-/* ── Selection color ──────────────────────────────────────────────────────── */
+/* ── Selection ────────────────────────────────────────────────────────────── */
 ::selection {
-  background: rgba(26, 61, 143, 0.15);
+  background: rgba(26, 61, 143, 0.12);
   color: #0C1124;
 }
 
-/* ── Focus ring — precision blue, no outline ─────────────────────────────── */
+/* ── Focus ring ───────────────────────────────────────────────────────────── */
 :focus-visible {
   outline: 2px solid #1A3D8F;
   outline-offset: 2px;
-}
-
-/* ── Remove default button/input radius everywhere ───────────────────────── */
-button, input, select, textarea {
-  border-radius: 0;
-}
-
-/* ── Smooth image rendering ───────────────────────────────────────────────── */
-img {
-  image-rendering: auto;
-  -webkit-font-smoothing: antialiased;
+  border-radius: 4px;
 }

@@ -3,14 +3,14 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { X, Menu } from 'lucide-react'
+import { X, Menu, ArrowUpRight } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const NAV_LINKS = [
-  { href: '/browse', label: 'Browse' },
-  { href: '/pricing', label: 'For Listers' },
-  { href: '/about', label: 'How It Works' },
-  { href: '/property-management', label: 'Property Management' },
+  { href: '/browse',               label: 'Browse' },
+  { href: '/pricing',              label: 'For Listers' },
+  { href: '/about',                label: 'How It Works' },
+  { href: '/property-management',  label: 'Property Management' },
 ]
 
 export function Navigation() {
@@ -19,73 +19,64 @@ export function Navigation() {
   const pathname = usePathname()
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 60)
+    const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  useEffect(() => {
-    setMobileOpen(false)
-  }, [pathname])
+  useEffect(() => { setMobileOpen(false) }, [pathname])
 
-  // Lock body scroll when mobile menu is open
   useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
   }, [mobileOpen])
+
+  const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/')
 
   return (
     <>
       <nav
-        className={[
-          'fixed top-0 left-0 w-full z-50 transition-all duration-200',
-          scrolled
-            ? 'bg-white border-b border-ink/[0.08]'
-            : 'bg-transparent border-b border-transparent',
-        ].join(' ')}
+        className="fixed top-0 left-0 w-full z-50 transition-all duration-300"
+        style={{
+          background: scrolled ? 'rgba(255,255,255,0.88)' : 'rgba(255,255,255,0.72)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          borderBottom: scrolled ? '1px solid rgba(0,0,0,0.07)' : '1px solid rgba(0,0,0,0.04)',
+          boxShadow: scrolled ? '0 1px 24px rgba(0,0,0,0.06)' : '0 1px 8px rgba(0,0,0,0.02)',
+        }}
       >
-        <div className="max-w-[1280px] mx-auto px-6 lg:px-10 h-[60px] flex items-center justify-between">
+        <div className="max-w-[1280px] mx-auto px-6 lg:px-10 h-[62px] flex items-center justify-between">
 
           {/* Logo */}
-          <Link
-            href="/"
-            className="flex items-center gap-3 no-underline group"
-            aria-label="RentLoop — home"
-          >
-            {/* Geometric RL monogram */}
+          <Link href="/" className="flex items-center gap-2.5 no-underline group" aria-label="RentLoop home">
             <div
-              className="w-[20px] h-[20px] flex items-center justify-center flex-shrink-0"
-              style={{ border: '1px solid #0C1124' }}
+              className="w-[22px] h-[22px] flex items-center justify-center flex-shrink-0 rounded-sm"
+              style={{ background: '#0C1124' }}
             >
-              <span
-                className="font-mono text-[7px] leading-none tracking-tight text-ink select-none"
-                style={{ fontWeight: 500, letterSpacing: '0.02em' }}
-              >
-                RL
-              </span>
+              <span className="font-mono text-[7px] text-white font-semibold tracking-tight select-none">RL</span>
             </div>
-            {/* Wordmark */}
-            <span
-              className="font-display text-xl font-light tracking-tight text-ink"
-              style={{ letterSpacing: '-0.01em' }}
-            >
+            <span className="font-sans text-[1.05rem] font-semibold tracking-tight text-ink">
               RentLoop
             </span>
           </Link>
 
-          {/* Desktop nav links */}
-          <div className="hidden md:flex items-center gap-7">
+          {/* Desktop links */}
+          <div className="hidden md:flex items-center gap-1">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="nav-underline text-xs uppercase tracking-[0.12em] font-sans font-medium text-slate/70 hover:text-ink transition-colors duration-200"
+                className="relative px-3.5 py-2 text-[0.8rem] font-medium rounded-full transition-all duration-200"
+                style={{
+                  color: isActive(link.href) ? '#1A3D8F' : '#3D4F73',
+                  background: isActive(link.href) ? 'rgba(26,61,143,0.07)' : 'transparent',
+                }}
+                onMouseEnter={e => {
+                  if (!isActive(link.href)) (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.04)'
+                }}
+                onMouseLeave={e => {
+                  if (!isActive(link.href)) (e.currentTarget as HTMLElement).style.background = 'transparent'
+                }}
               >
                 {link.label}
               </Link>
@@ -93,49 +84,50 @@ export function Navigation() {
           </div>
 
           {/* Desktop CTAs */}
-          <div className="hidden md:flex items-center gap-4">
+          <div className="hidden md:flex items-center gap-3">
             <Link
               href="/auth/login"
-              className="text-sm font-sans text-slate/60 hover:text-ink transition-colors duration-200"
+              className="text-[0.8rem] font-medium text-slate/70 hover:text-ink transition-colors duration-200 px-3 py-2"
             >
-              Sign In
+              Sign in
             </Link>
             <Link
               href="/auth/signup"
-              className="border border-royal text-royal text-xs tracking-wide uppercase px-5 py-2.5 hover:bg-royal hover:text-white transition-all duration-200 rounded-none font-sans font-medium"
+              className="flex items-center gap-1.5 text-[0.8rem] font-semibold text-white px-4 py-2 rounded-full transition-all duration-200"
+              style={{
+                background: 'linear-gradient(135deg, #1A3D8F 0%, #2952B8 100%)',
+                boxShadow: '0 2px 8px rgba(26,61,143,0.3)',
+              }}
             >
-              List your item&nbsp;↗
+              List your item
+              <ArrowUpRight size={12} strokeWidth={2} />
             </Link>
           </div>
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden p-2 -mr-2 text-ink"
+            className="md:hidden p-2 -mr-2 text-ink rounded-full hover:bg-black/5 transition-colors"
             onClick={() => setMobileOpen((o) => !o)}
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
           >
-            {mobileOpen
-              ? <X size={20} strokeWidth={1.5} />
-              : <Menu size={20} strokeWidth={1.5} />
-            }
+            {mobileOpen ? <X size={20} strokeWidth={1.5} /> : <Menu size={20} strokeWidth={1.5} />}
           </button>
         </div>
       </nav>
 
-      {/* Mobile full-screen overlay */}
+      {/* Mobile overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 bg-white flex flex-col"
+            className="fixed inset-0 z-40 flex flex-col"
+            style={{ background: 'rgba(255,255,255,0.97)', backdropFilter: 'blur(24px)', WebkitBackdropFilter: 'blur(24px)' }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: 'easeOut' }}
+            transition={{ duration: 0.18, ease: 'easeOut' }}
           >
-            {/* Top bar spacer matching nav height */}
-            <div className="h-[60px] flex-shrink-0" />
+            <div className="h-[62px] flex-shrink-0" />
 
-            {/* Links */}
             <nav className="flex-1 flex flex-col justify-center px-8 pb-4">
               <ul className="space-y-0">
                 {NAV_LINKS.map((link, i) => (
@@ -144,31 +136,29 @@ export function Navigation() {
                     initial={{ x: -20, opacity: 0 }}
                     animate={{ x: 0, opacity: 1 }}
                     exit={{ x: -20, opacity: 0 }}
-                    transition={{
-                      delay: i * 0.05,
-                      duration: 0.25,
-                      ease: 'easeOut',
-                    }}
+                    transition={{ delay: i * 0.05, duration: 0.22, ease: 'easeOut' }}
                   >
                     <Link
                       href={link.href}
-                      className="flex items-baseline gap-4 py-5 border-b border-border group"
+                      className="flex items-center justify-between py-5 border-b border-black/5 group"
                     >
-                      {/* Numbered label */}
-                      <span className="font-mono text-xs text-fog/50 w-5 flex-shrink-0 select-none">
-                        {String(i + 1).padStart(2, '0')}
-                      </span>
-                      {/* Link text */}
-                      <span className="font-heading text-4xl text-ink group-hover:text-royal transition-colors duration-200">
-                        {link.label}
-                      </span>
+                      <div className="flex items-baseline gap-4">
+                        <span className="font-mono text-[10px] text-fog/40 w-5 shrink-0">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span
+                          className="font-sans text-3xl font-semibold text-ink group-hover:text-royal transition-colors duration-200"
+                        >
+                          {link.label}
+                        </span>
+                      </div>
+                      <ArrowUpRight size={18} strokeWidth={1.5} className="text-fog/40 group-hover:text-royal transition-colors duration-200" />
                     </Link>
                   </motion.li>
                 ))}
               </ul>
             </nav>
 
-            {/* Bottom CTA buttons */}
             <motion.div
               className="px-8 pb-10 flex flex-col gap-3"
               initial={{ opacity: 0, y: 10 }}
@@ -178,13 +168,14 @@ export function Navigation() {
             >
               <Link
                 href="/auth/login"
-                className="w-full text-center py-3.5 border border-ink text-ink text-sm font-sans font-medium uppercase tracking-wide rounded-none hover:bg-ink hover:text-white transition-all duration-200"
+                className="w-full text-center py-3.5 rounded-full border border-black/10 text-ink text-sm font-medium hover:bg-black/4 transition-all"
               >
-                Sign In
+                Sign in
               </Link>
               <Link
                 href="/auth/signup"
-                className="w-full text-center py-3.5 bg-royal text-white text-sm font-sans font-medium uppercase tracking-wide rounded-none hover:bg-royal-dark transition-all duration-200"
+                className="w-full text-center py-3.5 rounded-full text-white text-sm font-semibold transition-all"
+                style={{ background: 'linear-gradient(135deg, #1A3D8F 0%, #2952B8 100%)', boxShadow: '0 2px 12px rgba(26,61,143,0.3)' }}
               >
                 List your item
               </Link>

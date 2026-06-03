@@ -130,8 +130,8 @@ export default function HomePage() {
           {/* Headline — left-aligned, editorial, massive */}
           <div className="mb-10">
             <h1
-              className="font-display text-ink block"
-              style={{ fontSize: 'clamp(4.5rem, 12vw, 11rem)', fontWeight: 300, lineHeight: 0.95, letterSpacing: '-0.03em' }}
+              className="font-sans text-ink block"
+              style={{ fontSize: 'clamp(4rem, 11vw, 10rem)', fontWeight: 800, lineHeight: 0.92, letterSpacing: '-0.04em' }}
             >
               <span className="block overflow-hidden">
                 <HeroWord word="Rent" delay={0.5} />
@@ -175,16 +175,20 @@ export default function HomePage() {
               <Magnet padding={40} strength={4}>
                 <Link
                   href="/browse"
-                  className="inline-flex items-center gap-2.5 px-7 py-3.5 bg-royal text-white font-sans font-medium text-sm tracking-wide transition-all duration-200 hover:bg-royal-dark group"
+                  className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-full text-white font-sans font-semibold text-sm transition-all duration-200 hover:opacity-90 group"
+                  style={{ background: 'linear-gradient(135deg, #1A3D8F 0%, #2952B8 100%)', boxShadow: '0 4px 16px rgba(26,61,143,0.3)' }}
                 >
                   Browse listings
-                  <ArrowUpRight size={14} strokeWidth={1.5} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  <ArrowUpRight size={14} strokeWidth={2} className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                 </Link>
               </Magnet>
               <Magnet padding={40} strength={4}>
                 <Link
                   href="/auth/signup"
-                  className="inline-flex items-center gap-2 px-7 py-3.5 border border-ink/20 text-ink font-sans font-medium text-sm tracking-wide transition-all duration-200 hover:border-royal hover:text-royal"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-sans font-semibold text-sm transition-all duration-200"
+                  style={{ border: '1.5px solid rgba(12,17,36,0.15)', color: '#0C1124' }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = 'rgba(0,0,0,0.04)'}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = 'transparent'}
                 >
                   List your item
                 </Link>

@@ -249,13 +249,7 @@ export default function AboutPage() {
           transition={{ duration: 0.7, ease: 'easeOut' }}
           className="relative max-w-4xl mx-auto"
         >
-          {/* Label pill */}
-          <div
-            className="inline-block px-4 py-1.5 rounded-full text-xs font-sans font-medium mb-8"
-            style={{ background: 'rgba(201,151,58,0.15)', color: '#E8BC6A' }}
-          >
-            Our Promise
-          </div>
+          <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-white/40 mb-8">Our Promise</p>
 
           {/* Headline */}
           <h1
@@ -312,12 +306,7 @@ export default function AboutPage() {
         <div className="max-w-[1200px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Text side */}
           <div>
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-xs font-sans font-medium mb-6"
-              style={{ background: '#EEF2FB', color: '#1A3D8F' }}
-            >
-              Why RentLoop exists
-            </div>
+            <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-fog mb-6">Why RentLoop exists</p>
 
             <TextReveal
               as="h2"
@@ -377,12 +366,7 @@ export default function AboutPage() {
       <section className="py-section px-6" style={{ background: '#FFFFFF' }}>
         <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-xs font-sans font-medium mb-6"
-              style={{ background: '#EEF2FB', color: '#1A3D8F' }}
-            >
-              How deposits work
-            </div>
+            <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-fog mb-6">How deposits work</p>
             <TextReveal
               as="h2"
               className="font-display text-ink font-light leading-tight [font-size:clamp(2rem,5vw,3.5rem)]"
@@ -408,12 +392,7 @@ export default function AboutPage() {
       <section className="py-section px-6" style={{ background: '#FDF6E3' }}>
         <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-xs font-sans font-medium mb-6"
-              style={{ background: 'rgba(201,151,58,0.15)', color: '#A67928' }}
-            >
-              Service-Level Agreements
-            </div>
+            <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-fog mb-6">Service-Level Agreements</p>
             <TextReveal
               as="h2"
               className="font-display text-ink font-light leading-tight [font-size:clamp(2rem,5vw,3.5rem)]"
@@ -438,12 +417,7 @@ export default function AboutPage() {
       <section className="py-section px-6" style={{ background: '#F0EEE9' }}>
         <div className="max-w-[1200px] mx-auto">
           <div className="text-center mb-16">
-            <div
-              className="inline-block px-4 py-1.5 rounded-full text-xs font-sans font-medium mb-6"
-              style={{ background: '#EEF2FB', color: '#1A3D8F' }}
-            >
-              Badge System
-            </div>
+            <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-fog mb-6">Badge System</p>
             <TextReveal
               as="h2"
               className="font-display text-ink font-light leading-tight [font-size:clamp(2rem,5vw,3.5rem)]"
@@ -630,12 +604,7 @@ export default function AboutPage() {
       {/* ─── 7. TEAM / SRI LANKA ─────────────────────────────────────────────── */}
       <section className="py-section px-6" style={{ background: '#0A1628' }}>
         <div className="max-w-[1200px] mx-auto text-center">
-          <div
-            className="inline-block px-4 py-1.5 rounded-full text-xs font-sans font-medium mb-6"
-            style={{ background: 'rgba(201,151,58,0.15)', color: '#E8BC6A' }}
-          >
-            The team
-          </div>
+          <p className="font-mono text-[10px] tracking-[0.25em] uppercase text-fog mb-6">The team</p>
 
           <TextReveal
             as="h2"

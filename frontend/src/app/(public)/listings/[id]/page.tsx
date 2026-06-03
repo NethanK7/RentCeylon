@@ -1,3 +1,5 @@
+'use client'
+
 import { ScrollProgress } from '@/components/animations/ScrollProgress'
 import { TextReveal } from '@/components/animations/TextReveal'
 import { DepositProtection } from '@/components/ui/DepositProtection'
